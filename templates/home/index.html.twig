@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block body %}
+<div style="max-width: 800px; margin: 50px auto; padding: 20px; text-align: center;">
+
+    {% if app.user %}
+        <h1>Welcome, {{ app.user.email }}!</h1>
+        <p style="font-size: 18px; color: #666; margin: 30px 0;">You are successfully logged in!</p>
+        
+        <div style="margin-top: 40px;">
+            <a href="{{ path('app_logout') }}" style="display: inline-block; padding: 12px 30px; background-color: #dc3545; color: white; text-decoration: none; border-radius: 4px; font-size: 16px;">
+                Logout
+            </a>
+        </div>
+
+    {% else %}
+        <h1>Welcome to our Application!</h1>
+        <p style="font-size: 18px; color: #666; margin: 30px 0;">Please login or create an account to continue.</p>
+        
+        <div style="margin-top: 40px;">
+            <a href="{{ path('app_login') }}" style="display: inline-block; padding: 12px 30px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; font-size: 16px; margin-right: 10px;">
+                Login
+            </a>
+            <a href="{{ path('app_register') }}" style="display: inline-block; padding: 12px 30px; background-color: #28a745; color: white; text-decoration: none; border-radius: 4px; font-size: 16px;">
+                Register
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
