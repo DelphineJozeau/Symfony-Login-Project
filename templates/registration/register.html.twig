@@ -13,111 +13,20 @@
             {{ form_errors(registrationForm.email) }}
         </div>
 
-        <div style="margin-bottom: 20px;">
-    {{ form_label(registrationForm.plainPassword) }}
-    {{ form_widget(registrationForm.plainPassword, {
-        'attr': {
-            'style': 'width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;'
-        }
-    }) }}
-    {{ form_errors(registrationForm.plainPassword) }}
-</div>
-
-        <!-- Indicateurs de validation du mot de passe -->
-        <div id="password-requirements" style="margin-bottom: 20px; padding: 15px; background-color: #f8f9fa; border-radius: 4px;">
-            <p style="margin: 0 0 10px 0; font-weight: bold; color: #333;">Password requirements:</p>
-            <ul style="list-style: none; padding: 0; margin: 0;">
-                <li id="req-length" class="requirement" style="padding: 5px 0; color: #dc3545;">
-                    <span class="icon">❌</span> At least 8 characters
-                </li>
-                <li id="req-uppercase" class="requirement" style="padding: 5px 0; color: #dc3545;">
-                    <span class="icon">❌</span> At least one uppercase letter
-                </li>
-                <li id="req-number" class="requirement" style="padding: 5px 0; color: #dc3545;">
-                    <span class="icon">❌</span> At least one number
-                </li>
-                <li id="req-special" class="requirement" style="padding: 5px 0; color: #dc3545;">
-                    <span class="icon">❌</span> At least one special character
-                </li>
-            </ul>
+        <!-- Application Vue.js pour la validation du mot de passe -->
+        <div id="password-validator-app">
+            <password-validator
+                input-name="registration_form[plainPassword]"
+                label="Plain password"
+                @validation-change="handleValidationChange"
+            ></password-validator>
         </div>
 
         {{ form_row(registrationForm.agreeTerms) }}
 
-        <button type="submit" id="submit-button" style="width: 100%; padding: 12px; background-color: #007bff; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;" disabled>
+        <button type="submit" id="submit-button" style="width: 100%; padding: 12px; background-color: #6c757d; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: not-allowed;" disabled>
             Register
         </button>
     {{ form_end(registrationForm) }}
 </div>
-
-    <script>
-    // Force le rechargement du script à chaque chargement de page
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log('Script de validation chargé');
-        
-        const passwordInput = document.getElementById('registration_form_plainPassword');
-        console.log('Input trouvé:', passwordInput);
-        
-        if (!passwordInput) {
-            console.error('Champ password non trouvé');
-            return;
-        }
-        
-        const submitButton = document.getElementById('submit-button');
-        
-        // Éléments des exigences
-        const reqLength = document.getElementById('req-length');
-        const reqUppercase = document.getElementById('req-uppercase');
-        const reqNumber = document.getElementById('req-number');
-        const reqSpecial = document.getElementById('req-special');
-        
-        // Fonction de validation
-        function validatePassword() {
-            const password = passwordInput.value;
-            
-            // Vérifications
-            const hasLength = password.length >= 8;
-            const hasUppercase = /[A-Z]/.test(password);
-            const hasNumber = /[0-9]/.test(password);
-            const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-            
-            // Mise à jour visuelle
-            updateRequirement(reqLength, hasLength);
-            updateRequirement(reqUppercase, hasUppercase);
-            updateRequirement(reqNumber, hasNumber);
-            updateRequirement(reqSpecial, hasSpecial);
-            
-            // Activer/désactiver le bouton submit
-            const allValid = hasLength && hasUppercase && hasNumber && hasSpecial;
-            submitButton.disabled = !allValid;
-            
-            if (allValid) {
-                submitButton.style.backgroundColor = '#28a745';
-                submitButton.style.cursor = 'pointer';
-            } else {
-                submitButton.style.backgroundColor = '#6c757d';
-                submitButton.style.cursor = 'not-allowed';
-            }
-        }
-        
-        // Fonction pour mettre à jour l'affichage d'une exigence
-        function updateRequirement(element, isValid) {
-            const icon = element.querySelector('.icon');
-            if (isValid) {
-                element.style.color = '#28a745';
-                icon.textContent = '✅';
-            } else {
-                element.style.color = '#dc3545';
-                icon.textContent = '❌';
-            }
-        }
-        
-        // Écouter les changements dans le champ mot de passe
-        passwordInput.addEventListener('input', validatePassword);
-        passwordInput.addEventListener('keyup', validatePassword);
-        
-        // Validation initiale au chargement
-        validatePassword();
-    });
-    </script>
 {% endblock %}

@@ -1,10 +1,35 @@
-import './bootstrap.js';
-/*
- * Welcome to your app's main JavaScript file!
- *
- * This file will be included onto the page via the importmap() Twig function,
- * which should already be in your base.html.twig.
- */
+// Import des styles
 import './styles/app.css';
 
-console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
+// Import de Vue
+import { createApp } from 'vue';
+import PasswordValidator from './components/PasswordValidator.vue';
+
+// Initialise Vue sur la page d'inscription si l'élément existe
+const passwordValidatorEl = document.getElementById('password-validator-app');
+
+if (passwordValidatorEl) {
+    const app = createApp({
+        components: {
+            PasswordValidator
+        },
+        data() {
+            return {
+                isPasswordValid: false
+            };
+        },
+        methods: {
+            handleValidationChange(isValid) {
+                this.isPasswordValid = isValid;
+                const submitBtn = document.getElementById('submit-button');
+                if (submitBtn) {
+                    submitBtn.disabled = !isValid;
+                    submitBtn.style.backgroundColor = isValid ? '#28a745' : '#6c757d';
+                    submitBtn.style.cursor = isValid ? 'pointer' : 'not-allowed';
+                }
+            }
+        }
+    });
+    
+    app.mount('#password-validator-app');
+}
