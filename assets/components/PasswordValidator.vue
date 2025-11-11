@@ -1,8 +1,8 @@
 <template>
   <div>
     <!-- Champ mot de passe -->
-    <div style="margin-bottom: 20px;">
-      <label :for="inputId" class="required">{{ label }}</label>
+    <div class="mb-3">
+      <label :for="inputId" class="form-label required">{{ label }}</label>
       <input
         :id="inputId"
         v-model="password"
@@ -10,25 +10,25 @@
         :name="inputName"
         required
         autocomplete="new-password"
-        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;"
+        class="form-control"
         @input="validatePassword"
       />
     </div>
 
     <!-- Indicateurs de validation -->
-    <div style="margin-bottom: 20px; padding: 15px; background-color: #f8f9fa; border-radius: 4px;">
-      <p style="margin: 0 0 10px 0; font-weight: bold; color: #333;">Password requirements:</p>
-      <ul style="list-style: none; padding: 0; margin: 0;">
-        <li :style="{ padding: '5px 0', color: requirements.length ? '#28a745' : '#dc3545' }">
+    <div class="alert alert-light border mb-3">
+      <p class="fw-bold mb-2">Password requirements:</p>
+      <ul class="list-unstyled mb-0">
+        <li class="mb-1" :class="requirements.length ? 'text-success' : 'text-danger'">
           <span>{{ requirements.length ? '✅' : '❌' }}</span> At least 8 characters
         </li>
-        <li :style="{ padding: '5px 0', color: requirements.uppercase ? '#28a745' : '#dc3545' }">
+        <li class="mb-1" :class="requirements.uppercase ? 'text-success' : 'text-danger'">
           <span>{{ requirements.uppercase ? '✅' : '❌' }}</span> At least one uppercase letter
         </li>
-        <li :style="{ padding: '5px 0', color: requirements.number ? '#28a745' : '#dc3545' }">
+        <li class="mb-1" :class="requirements.number ? 'text-success' : 'text-danger'">
           <span>{{ requirements.number ? '✅' : '❌' }}</span> At least one number
         </li>
-        <li :style="{ padding: '5px 0', color: requirements.special ? '#28a745' : '#dc3545' }">
+        <li class="mb-1" :class="requirements.special ? 'text-success' : 'text-danger'">
           <span>{{ requirements.special ? '✅' : '❌' }}</span> At least one special character
         </li>
       </ul>
@@ -50,7 +50,7 @@ export default {
     },
     label: {
       type: String,
-      default: 'Plain password'
+      default: 'Password'
     }
   },
   data() {
@@ -76,7 +76,6 @@ export default {
       this.requirements.number = /[0-9]/.test(this.password);
       this.requirements.special = /[!@#$%^&*(),.?":{}|<>]/.test(this.password);
       
-      // Émettre l'état de validation au parent
       this.$emit('validation-change', this.allValid);
     }
   }

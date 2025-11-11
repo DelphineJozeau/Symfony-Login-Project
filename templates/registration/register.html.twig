@@ -3,30 +3,48 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-<div style="max-width: 500px; margin: 50px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
-    <h1 style="text-align: center; margin-bottom: 30px;">Create Account</h1>
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body p-5">
+                    <h1 class="card-title text-center mb-4 h3">Create Account</h1>
 
-    {{ form_start(registrationForm) }}
-        <div style="margin-bottom: 20px;">
-            {{ form_label(registrationForm.email) }}
-            {{ form_widget(registrationForm.email, {'attr': {'style': 'width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;'}}) }}
-            {{ form_errors(registrationForm.email) }}
+                    {{ form_start(registrationForm) }}
+                        <div class="mb-3">
+                            {{ form_label(registrationForm.email, null, {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(registrationForm.email) }}
+                        </div>
+
+                        <!-- Application Vue.js pour la validation du mot de passe -->
+                        <div id="password-validator-app">
+                            <password-validator
+                                input-name="registration_form[plainPassword]"
+                                label="Password"
+                                @validation-change="handleValidationChange"
+                            ></password-validator>
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form_row(registrationForm.agreeTerms) }}
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" id="submit-button" class="btn btn-secondary btn-lg" disabled>
+                                Register
+                            </button>
+                        </div>
+
+                        <div class="text-center mt-3">
+                            <small class="text-muted">
+                                Already have an account? <a href="{{ path('app_login') }}">Sign in</a>
+                            </small>
+                        </div>
+                    {{ form_end(registrationForm) }}
+                </div>
+            </div>
         </div>
-
-        <!-- Application Vue.js pour la validation du mot de passe -->
-        <div id="password-validator-app">
-            <password-validator
-                input-name="registration_form[plainPassword]"
-                label="Plain password"
-                @validation-change="handleValidationChange"
-            ></password-validator>
-        </div>
-
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" id="submit-button" style="width: 100%; padding: 12px; background-color: #6c757d; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: not-allowed;" disabled>
-            Register
-        </button>
-    {{ form_end(registrationForm) }}
+    </div>
 </div>
 {% endblock %}

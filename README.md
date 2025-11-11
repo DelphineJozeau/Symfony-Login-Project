@@ -18,7 +18,7 @@ Application web développée avec Symfony 7 et Docker, proposant un système com
 
 - **Backend** : PHP 8.3, Symfony 7.3
 - **Base de données** : MariaDB
-- **Frontend** : HTML, CSS, Vue.js 3
+- **Frontend** : HTML, CSS, Vue.js 3, Bootstrap 5
 - **Build tools** : Webpack Encore, npm
 - **Serveur web** : Nginx
 - **Containerisation** : Docker & Docker Compose
@@ -58,6 +58,8 @@ apt-get install -y nodejs
 
 # Installer les dépendances npm
 npm install
+
+# Les dépendances incluent Bootstrap 5 pour le design
 
 # Compiler les assets (Vue.js)
 npm run dev

@@ -1,4 +1,10 @@
-// Import des styles
+// Import Bootstrap CSS
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+// Import Bootstrap JavaScript
+import * as bootstrap from 'bootstrap';
+
+// Import des styles personnalisés (après Bootstrap)
 import './styles/app.css';
 
 // Import de Vue
